@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>متجر أدو - تخصيص الباقة</title>
+<style>
+  body {font-family: "Tajawal", sans-serif; background:#fff6fb; margin:0; padding:20px; color:#333;}
+  .container {max-width:1000px; margin:auto;}
+  h1 {color:#b83b79; text-align:center;}
+  .options, .preview {background:#fff; padding:20px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); margin:10px;}
+  .row {display:flex; gap:20px; flex-wrap:wrap;}
+  label {display:block; margin:10px 0 5px; font-weight:bold;}
+  select, input {width:100%; padding:8px; border:1px solid #ddd; border-radius:6px;}
+  .btn {margin-top:15px; background:#b83b79; color:#fff; padding:10px 16px; border:none; border-radius:8px; cursor:pointer;}
+  .btn:hover {background:#a22d66;}
+  .preview img {width:100%; border-radius:10px; border:1px solid #eee;}
+  .summary {margin-top:10px; font-weight:bold; color:#b83b79;}
+</style>
+</head>
+<body>
+  <div class="container">
+    <h1>✨ تخصيص باقتك ✨</h1>
+    <div class="row">
+      <!-- خيارات التخصيص -->
+      <div class="options" style="flex:1; min-width:300px;">
+        <label>عدد الورود</label>
+        <input type="number" id="qty" value="12" min="5" max="100">
+
+        <label>لون الورود</label>
+        <select id="roseColor">
+          <option value="pink">وردي</option>
+          <option value="red">أحمر</option>
+          <option value="white">أبيض</option>
+          <option value="yellow">أصفر</option>
+          <option value="mix">مختلط</option>
+        </select>
+
+        <label>لون التغليف</label>
+        <select id="wrapColor">
+          <option value="pink">وردي</option>
+          <option value="brown">بني</option>
+          <option value="white">أبيض</option>
+          <option value="clear">شفاف</option>
+        </select>
+
+        <button class="btn" onclick="updatePreview()">معاينة الباقة</button>
+      </div>
+
+      <!-- المعاينة -->
+      <div class="preview" style="flex:2; min-width:300px;">
+        <img id="bouquetImg" src="images/placeholder.jpg" alt="معاينة الباقة">
+        <div class="summary" id="summaryText">12 وردة - وردي - تغليف وردي - الإجمالي: 24,000</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const PRICE = 2000;
+
+  function updatePreview(){
+    const qty = document.getElementById('qty').value;
+    const color = document.getElementById('roseColor').value;
+    const wrap = document.getElementById('wrapColor').value;
+
+    // اسم الصورة حسب الاختيارات
+    const fileName = `images/rose-${color}-wrap-${wrap}-${qty}.jpg`;
+
+    // تغيير الصورة
+    document.getElementById('bouquetImg').src = fileName;
+
+    // تحديث الملخص
+    const total = qty * PRICE;
+    const colorText = document.getElementById('roseColor').options[document.getElementById('roseColor').selectedIndex].text;
+    const wrapText = document.getElementById('wrapColor').options[document.getElementById('wrapColor').selectedIndex].text;
+    document.getElementById('summaryText').textContent =
+      `${qty} وردة - ${colorText} - تغليف ${wrapText} - الإجمالي: ${total.toLocaleString('ar-IQ')} د.ع`;
+  }
+</script>
+</body>
+</html>
